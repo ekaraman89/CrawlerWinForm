@@ -23,12 +23,12 @@ namespace CrawlerWinForm
 
             string text = GetPlainTextFromHtml(rctxtResult.Text);
 
-            //http://www.milliyet.com.tr/aksal-yavuz/yusuf-ve-abdulkadir-e-destek-2766396-skorer-yazar-yazisi/
+            //http://www.milliyet.com.tr/yazar-adi/
             if (txtUrl.Text.IndexOf("http://www.milliyet.com.tr/yazarlar/") == -1)
             {
                 text = Crop(text, "A+A-", "Yazarın tüm yazıları");
             }
-            else //http://www.milliyet.com.tr/yazarlar/abbas-guclu/en-guclu-pasaport--2759676/
+            else //http://www.milliyet.com.tr/yazarlar/....
             {
                 text = Crop(text, "Tüm Yazıları", "Yazarın Diğer Yazıları");
             }
@@ -71,5 +71,36 @@ namespace CrawlerWinForm
             return htmlString;
         }
 
+        private void btnWriteToFile_Click(object sender, EventArgs e)
+        {
+            string text = rctxtResult.Text;
+
+            string path = "Files";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+            string description = "Makale kategorisi bulma";
+
+            CreateFile("Original.txt", text);
+            CreateArffFile(description, path, "Original", text, "test");
+            CreateArffFile(description, path, "WithoutStopWordOriginal", StopwordTool.RemoveStopwords(text), "test");
+        }
+
+        private void CreateArffFile(string Description, string Path, string FileName, string TextData, string Category)
+        {
+            Arff arff = new Arff(Description, Path, FileName);
+            arff.AddAttribute("text", Arff.ArffType.String);
+            arff.AddAttribute(new string[] { "Siyaset", "Gundem", "Spor" });
+            arff.AddData(new string[] { TextData, Category });
+        }
+
+        private void CreateFile(string FileName, string Text)
+        {
+            using (StreamWriter sw = new StreamWriter(FileName, true))
+            {
+                sw.WriteLine(Text);
+            }
+        }
+
     }
 }
+

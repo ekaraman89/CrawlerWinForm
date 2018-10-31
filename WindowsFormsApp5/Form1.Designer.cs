@@ -33,11 +33,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.rctxtResult = new System.Windows.Forms.RichTextBox();
             this.btnParser = new System.Windows.Forms.Button();
+            this.btnWriteToFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(591, 32);
+            this.btnGo.Location = new System.Drawing.Point(588, 12);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 0;
@@ -47,7 +48,7 @@
             // 
             // txtUrl
             // 
-            this.txtUrl.Location = new System.Drawing.Point(56, 34);
+            this.txtUrl.Location = new System.Drawing.Point(53, 14);
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.Size = new System.Drawing.Size(529, 20);
             this.txtUrl.TabIndex = 1;
@@ -56,7 +57,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 37);
+            this.label1.Location = new System.Drawing.Point(13, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 2;
@@ -64,15 +65,15 @@
             // 
             // rctxtResult
             // 
-            this.rctxtResult.Location = new System.Drawing.Point(12, 61);
+            this.rctxtResult.Location = new System.Drawing.Point(9, 41);
             this.rctxtResult.Name = "rctxtResult";
-            this.rctxtResult.Size = new System.Drawing.Size(654, 338);
+            this.rctxtResult.Size = new System.Drawing.Size(654, 358);
             this.rctxtResult.TabIndex = 3;
             this.rctxtResult.Text = "";
             // 
             // btnParser
             // 
-            this.btnParser.Location = new System.Drawing.Point(591, 405);
+            this.btnParser.Location = new System.Drawing.Point(588, 405);
             this.btnParser.Name = "btnParser";
             this.btnParser.Size = new System.Drawing.Size(75, 23);
             this.btnParser.TabIndex = 4;
@@ -80,11 +81,22 @@
             this.btnParser.UseVisualStyleBackColor = true;
             this.btnParser.Click += new System.EventHandler(this.btnParser_Click);
             // 
+            // btnWriteToFile
+            // 
+            this.btnWriteToFile.Location = new System.Drawing.Point(9, 405);
+            this.btnWriteToFile.Name = "btnWriteToFile";
+            this.btnWriteToFile.Size = new System.Drawing.Size(130, 23);
+            this.btnWriteToFile.TabIndex = 5;
+            this.btnWriteToFile.Text = "Dosyaya Yaz";
+            this.btnWriteToFile.UseVisualStyleBackColor = true;
+            this.btnWriteToFile.Click += new System.EventHandler(this.btnWriteToFile_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 437);
+            this.ClientSize = new System.Drawing.Size(675, 434);
+            this.Controls.Add(this.btnWriteToFile);
             this.Controls.Add(this.btnParser);
             this.Controls.Add(this.rctxtResult);
             this.Controls.Add(this.label1);
@@ -104,6 +116,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox rctxtResult;
         private System.Windows.Forms.Button btnParser;
+        private System.Windows.Forms.Button btnWriteToFile;
     }
 }
 
