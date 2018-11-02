@@ -18,8 +18,11 @@ namespace CrawlerWinForm
             rctxtResult.Text = GetResponse(txtUrl.Text);
         }
 
+        string Category = "Diğer";
+
         private void btnParser_Click(object sender, EventArgs e)
         {
+            GetCategory();
 
             string text = GetPlainTextFromHtml(rctxtResult.Text);
 
@@ -34,7 +37,16 @@ namespace CrawlerWinForm
             }
 
             rctxtResult.Text = text;
+        }
 
+        private void GetCategory()
+        {
+            string catRegex = "<div class=\"dtyTop\"><div class=\"dTTabs\"><div class=\"kat\"><a href=\"/.*";
+
+            foreach (Match item in Regex.Matches(rctxtResult.Text, catRegex))
+            {
+                Category = Crop(item.Value, "/\">", "</a></div></div></div>");
+            }
         }
 
         private static string Crop(string text, string topCrop, string botomCrop)
@@ -81,7 +93,7 @@ namespace CrawlerWinForm
             string description = "Makale kategorisi bulma";
 
             CreateFile("Original.txt", text);
-            CreateArffFile(description, path, "Original", text, "test");
+            CreateArffFile(description, path, "Original", text, Category);
             CreateArffFile(description, path, "WithoutStopWordOriginal", StopwordTool.RemoveStopwords(text), "test");
         }
 
@@ -89,7 +101,7 @@ namespace CrawlerWinForm
         {
             Arff arff = new Arff(Description, Path, FileName);
             arff.AddAttribute("text", Arff.ArffType.String);
-            arff.AddAttribute(new string[] { "Siyaset", "Gundem", "Spor" });
+            arff.AddAttribute(new string[] { "SİYASET", "GÜNDEM", "EKONOMİ","DÜNYA" });
             arff.AddData(new string[] { TextData, Category });
         }
 
