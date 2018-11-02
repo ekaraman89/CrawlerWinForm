@@ -101,7 +101,7 @@ namespace CrawlerWinForm
         {
             Arff arff = new Arff(Description, Path, FileName);
             arff.AddAttribute("text", Arff.ArffType.String);
-            arff.AddAttribute(new string[] { "SİYASET", "GÜNDEM", "EKONOMİ","DÜNYA" });
+            arff.AddAttribute(new string[] { "SİYASET", "GÜNDEM", "EKONOMİ", "DÜNYA" });
             arff.AddData(new string[] { TextData, Category });
         }
 
