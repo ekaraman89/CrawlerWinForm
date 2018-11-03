@@ -15,35 +15,17 @@ namespace CrawlerWinForm
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            rctxtResult.Text = GetResponse(txtUrl.Text);
+            wbNews.Navigate(txtUrl.Text);
         }
 
         string Category = "Diğer";
 
-        private void btnParser_Click(object sender, EventArgs e)
-        {
-            GetCategory();
 
-            string text = GetPlainTextFromHtml(rctxtResult.Text);
-
-            //http://www.milliyet.com.tr/yazar-adi/
-            if (txtUrl.Text.IndexOf("http://www.milliyet.com.tr/yazarlar/") == -1)
-            {
-                text = Crop(text, "A+A-", "Yazarın tüm yazıları");
-            }
-            else //http://www.milliyet.com.tr/yazarlar/....
-            {
-                text = Crop(text, "Tüm Yazıları", "Yazarın Diğer Yazıları");
-            }
-
-            rctxtResult.Text = text;
-        }
-
-        private void GetCategory()
+        private void GetCategory(string Text)
         {
             string catRegex = "<div class=\"dtyTop\"><div class=\"dTTabs\"><div class=\"kat\"><a href=\"/.*";
 
-            foreach (Match item in Regex.Matches(rctxtResult.Text, catRegex))
+            foreach (Match item in Regex.Matches(Text, catRegex))
             {
                 Category = Crop(item.Value, "/\">", "</a></div></div></div>");
             }
@@ -85,6 +67,7 @@ namespace CrawlerWinForm
 
         private void btnWriteToFile_Click(object sender, EventArgs e)
         {
+            btnWriteToFile.Enabled = false;
             string text = rctxtResult.Text;
 
             string path = "Files";
@@ -94,13 +77,13 @@ namespace CrawlerWinForm
 
             CreateFile("Original.txt", text);
             CreateArffFile(description, path, "Original", text, Category);
-            CreateArffFile(description, path, "WithoutStopWordOriginal", StopwordTool.RemoveStopwords(text), "test");
+            CreateArffFile(description, path, "WithoutStopWordOriginal", StopwordTool.RemoveStopwords(text), Category);
         }
 
         private void CreateArffFile(string Description, string Path, string FileName, string TextData, string Category)
         {
             Arff arff = new Arff(Description, Path, FileName);
-            arff.AddAttribute("text", Arff.ArffType.String);
+            arff.AddAttribute("Text", Arff.ArffType.String);
             arff.AddAttribute(new string[] { "SİYASET", "GÜNDEM", "EKONOMİ", "DÜNYA" });
             arff.AddData(new string[] { TextData, Category });
         }
@@ -113,6 +96,49 @@ namespace CrawlerWinForm
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            btnWriteToFile.Enabled = false;
+            wbNews.ScriptErrorsSuppressed = true;
+            wbNews.Navigate("http://www.milliyet.com.tr/yazarlar/");
+        }
+
+        private void wbNews_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            wbNews.Navigate(wbNews.StatusText);
+        }
+
+        private void wbNews_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            rctxtResult.Text = string.Empty;
+            if (wbNews.Url.ToString().IndexOf("http://www.milliyet.com.tr/yazarlar/") != -1)
+            {
+                if (wbNews.Url.Segments.Length == 4)
+                {
+                    string text = wbNews.DocumentText;
+                    GetCategory(text);
+
+                    text = GetPlainTextFromHtml(text);
+
+                    text = Crop(text, "Tüm Yazıları", "Yazarın Diğer Yazıları");
+
+                    rctxtResult.Text = text;
+                    btnWriteToFile.Enabled = true;
+                }
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            wbNews.GoBack();
+        }
+
+        private void btnForward_Click(object sender, EventArgs e)
+        {
+            wbNews.GoForward();
+        }
     }
 }
+
 

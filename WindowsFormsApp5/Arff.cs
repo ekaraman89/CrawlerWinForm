@@ -27,15 +27,15 @@ namespace CrawlerWinForm
             attibutes = new Dictionary<string, string>();
         }
 
-        public void AddAttribute(string name, ArffType type)
+        public void AddAttribute(string Name, ArffType Type)
         {
-            attibutes.Add(type.ToString(), name);
+            attibutes.Add(Name, Type.ToString());
         }
 
-        public void AddAttribute(params string[] values)
+        public void AddAttribute(params string[] Values)
         {
             string att = string.Empty;
-            foreach (string item in values)
+            foreach (string item in Values)
             {
                 att += $"{item},";
             }
@@ -44,7 +44,7 @@ namespace CrawlerWinForm
         }
 
         private void CreateFile()
-        {           
+        {
             using (streamWriter = new StreamWriter(Path))
             {
                 CreateHeader();
@@ -69,7 +69,7 @@ namespace CrawlerWinForm
             streamWriter.WriteLine();
         }
 
-        public void AddData(params string[] data)
+        public void AddData(params string[] Data)
         {
             if (!File.Exists(Path))
             {
@@ -77,7 +77,7 @@ namespace CrawlerWinForm
             }
 
             string _data = string.Empty;
-            foreach (string item in data)
+            foreach (string item in Data)
             {
                 _data += $"{QuoteAndEscape(item)},";
             }
