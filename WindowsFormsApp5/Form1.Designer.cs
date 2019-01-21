@@ -39,6 +39,8 @@
             this.pnlTop = new System.Windows.Forms.Panel();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnAllArticles = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.pnlTop.SuspendLayout();
             this.pnlBottom.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -124,6 +126,8 @@
             // pnlTop
             // 
             this.pnlTop.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pnlTop.Controls.Add(this.label2);
+            this.pnlTop.Controls.Add(this.btnAllArticles);
             this.pnlTop.Controls.Add(this.label1);
             this.pnlTop.Controls.Add(this.btnForward);
             this.pnlTop.Controls.Add(this.btnGo);
@@ -154,6 +158,25 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1311, 507);
             this.panel1.TabIndex = 12;
+            // 
+            // btnAllArticles
+            // 
+            this.btnAllArticles.Location = new System.Drawing.Point(1033, 3);
+            this.btnAllArticles.Name = "btnAllArticles";
+            this.btnAllArticles.Size = new System.Drawing.Size(75, 23);
+            this.btnAllArticles.TabIndex = 10;
+            this.btnAllArticles.Text = "Tüm Yazılar";
+            this.btnAllArticles.UseVisualStyleBackColor = true;
+            this.btnAllArticles.Click += new System.EventHandler(this.btnAllArticles_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1139, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "label2";
             // 
             // Form1
             // 
@@ -187,6 +210,8 @@
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnAllArticles;
+        private System.Windows.Forms.Label label2;
     }
 }
 

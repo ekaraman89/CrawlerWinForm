@@ -1,4 +1,8 @@
-﻿using System;
+﻿///—————————————————————
+///   Author: Emrah KARAMAN ekaraman89@hotmail.com   Date: 12.2018
+///—————————————————————
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 

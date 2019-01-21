@@ -1,4 +1,8 @@
-﻿using System;
+﻿///—————————————————————
+///   Author: Emrah KARAMAN ekaraman89@hotmail.com   Date: 12.2018
+///—————————————————————
+
+using System;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -19,8 +23,7 @@ namespace CrawlerWinForm
         }
 
         string Category = "Diğer";
-
-
+        
         private void GetCategory(string Text)
         {
             string catRegex = "<div class=\"dtyTop\"><div class=\"dTTabs\"><div class=\"kat\"><a href=\"/.*";
@@ -67,8 +70,12 @@ namespace CrawlerWinForm
 
         private void btnWriteToFile_Click(object sender, EventArgs e)
         {
+            WriteToFile(rctxtResult.Text);
+        }
+
+        private void WriteToFile(string text)
+        {
             btnWriteToFile.Enabled = false;
-            string text = rctxtResult.Text;
 
             string path = "Files";
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -138,6 +145,42 @@ namespace CrawlerWinForm
         {
             wbNews.GoForward();
         }
+
+        private void btnAllArticles_Click(object sender, EventArgs e)
+        {
+            string[] articles = {
+
+            };
+
+            int index = 1;
+            foreach (var item in articles)
+            {
+                string text = null;
+                try
+                {
+                    text = GetResponse("http://www.milliyet.com.tr" + item.Trim());
+                    label2.Text = index.ToString();
+                    label2.Update();
+                    index++;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    GetCategory(text);
+
+                    text = GetPlainTextFromHtml(text);
+
+                    text = Crop(text, "Tüm Yazıları", "Yazarın Diğer Yazıları");
+                    WriteToFile(text);
+                }
+            }
+
+        }
+
     }
 }
 
